@@ -1,0 +1,23 @@
+Start Zookeeper
+cd C:\tools\dev\kafka_2.11-1.0.0\bin\windows
+zookeeper-server-start.bat ..\..\config\zookeeper.properties
+
+Zookeeper connection
+connectString=localhost:2181
+
+
+Start Kafka servers
+cd C:\tools\dev\kafka_2.11-1.0.0\bin\windows
+kafka-server-start.bat ..\..\config\server1.properties
+kafka-server-start.bat ..\..\config\server2.properties
+kafka-server-start.bat ..\..\config\server3.properties
+
+cd C:\tools\dev\kafka_2.11-1.0.0\bin\windows
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 3 --partitions 3 --topic first_topic
+
+kafka-console-producer.bat --broker-list localhost:9091 --topic first_topic
+
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic first_topic --from-beginning
+
+kafka-topics.bat --describe --zookeeper localhost:2181 --topic first_topic
+
